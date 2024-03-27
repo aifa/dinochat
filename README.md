@@ -1,10 +1,8 @@
 # ChatGPT Lite
 
-ChatGPT demo forked from [chatgpt-lite](https://github.com/galadriel-ai/chatgpt-lite)
+chat forked from [chatgpt-lite](https://github.com/galadriel-ai/chatgpt-lite)
 
-This is a demo app for [Galadriel](https://galadriel.com) 
-
-To see the contracts this app uses check this repo: [Contracts](https://github.com/galadriel-ai/contracts)
+This is a chat app used by DinoAI
 
 ## Development
 
@@ -14,10 +12,9 @@ To see the contracts this app uses check this repo: [Contracts](https://github.c
 2. Clone the repository.
 3. Install dependencies with `npm install`.
 4. Copy `.env.example` to `.env.local` and update environment variables.  
-Edit .env.local
-`NEXT_PUBLIC_NETWORK` "local" defaults to `http://localhost:8545/`  
-and anything else uses `https://devnet.galadriel.com/` as the RPC url  
-The default contract address is Galadriel testnet contract address
+   Edit .env.local
+   `NEXT_PUBLIC_NETWORK` "local" defaults to `http://localhost:8545/`  
+   and anything else uses `https://testnet.galadriel.com/` as the RPC url  
+   The default contract address is Galadriel testnet contract address
 5. Start the application using `npm run dev`.
 6. Visit `http://localhost:3001` in your browser.
-
