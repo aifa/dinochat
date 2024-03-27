@@ -7,20 +7,20 @@ import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { BiMessageDetail } from 'react-icons/bi'
 import { FiPlus } from 'react-icons/fi'
 import { RiRobot2Line } from 'react-icons/ri'
+import { Persona } from '.'
 import ChatContext from './chatContext'
 
 import './index.scss'
 
-export const ChatSideBar = () => {
+export const ChatSideBar = (persona: {persona:Persona}) => {
   const {
     currentChatRef,
     chatList,
-    DefaultPersonas,
     toggleSidebar,
     onDeleteChat,
     onChangeChat,
     onCreateChat,
-    onOpenPersonaPanel
+    onOpenPersonaPanel,
   } = useContext(ChatContext)
 
   return (
@@ -28,7 +28,7 @@ export const ChatSideBar = () => {
       <Flex className="p-2 h-full overflow-hidden w-64" direction="column" gap="3">
         <Box
           width="auto"
-          onClick={() => onCreateChat?.(DefaultPersonas[0])}
+          onClick={() => onCreateChat?.(persona.persona)}
           className="bg-token-surface-primary active:scale-95 cursor-pointer"
         >
           <FiPlus className="size-4" />

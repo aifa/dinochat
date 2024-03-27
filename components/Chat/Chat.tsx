@@ -4,6 +4,7 @@ import {forwardRef, useCallback, useContext, useEffect, useImperativeHandle, use
 import {Flex, Heading, IconButton, ScrollArea, Tooltip} from '@radix-ui/themes'
 import {useWeb3ModalProvider} from '@web3modal/ethers/react';
 import {BrowserProvider, Contract, ethers, TransactionReceipt} from "ethers";
+import { useParams } from 'next/navigation';
 import ContentEditable from 'react-contenteditable'
 import toast from 'react-hot-toast'
 import {AiOutlineClear, AiOutlineLoading3Quarters, AiOutlineUnorderedList} from 'react-icons/ai'
@@ -29,7 +30,7 @@ export interface ChatGPInstance {
 }
 
 
-const Chat = (props: ChatProps, ref: any) => {
+const Chat = ( props: ChatProps, ref: any) => {
   const {
     debug,
     currentChatRef,
@@ -55,6 +56,9 @@ const Chat = (props: ChatProps, ref: any) => {
   const conversation = useRef<ChatMessage[]>([])
 
   const bottomOfChatRef = useRef<HTMLDivElement>(null)
+
+  const params = useParams<{ id: string }>()
+  const nftId : string = params.id;
   const sendMessage = useCallback(
     async (e: any) => {
       if (!isLoading) {
@@ -81,9 +85,10 @@ const Chat = (props: ChatProps, ref: any) => {
           const contract = new Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "", ABI, signer)
           let receipt
           let chatId
+          
           if (conversation.current.length === 1) {
             // Start chat
-            const tx = await contract.startChat(input)
+            const tx = await contract.startChat(input, nftId)
             receipt = await tx.wait()
             chatId = getChatId(receipt, contract)
             if (chatId) {
@@ -250,7 +255,7 @@ const Chat = (props: ChatProps, ref: any) => {
         px="4"
         style={{backgroundColor: "#114093"}}
       >
-        <Heading size="4">{currentChatRef?.current?.persona?.name || 'None'}</Heading>
+        <Heading size="4">{currentChatRef?.current?.persona?.name || 'None'} - {currentChatRef?.current?.persona?.prompt || 'None'}</Heading>
       </Flex>
       <ScrollArea
         className="flex-1 px-4"

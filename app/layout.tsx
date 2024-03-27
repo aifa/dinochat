@@ -9,10 +9,10 @@ import '@/styles/theme-config.css'
 
 export const metadata = {
   title: {
-    default: 'Galadriel On-Chain ChatGPT',
-    template: `%s - ChatGPT Lite`
+    default: 'DinoAI Chat',
+    template: `%s - Chat`
   },
-  description: 'AI assistant powered by ChatGPT on Galadriel testnet',
+  description: 'DinoAI assistants powered by ChatGPT on Galadriel testnet',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',

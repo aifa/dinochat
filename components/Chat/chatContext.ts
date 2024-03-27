@@ -6,7 +6,6 @@ import { Chat, ChatMessage, Persona } from './interface'
 const ChatContext = createContext<{
   debug?: boolean
   personaPanelType: string
-  DefaultPersonas: Persona[]
   currentChatRef?: MutableRefObject<Chat | undefined>
   chatList: Chat[]
   personas: Persona[]
@@ -32,7 +31,6 @@ const ChatContext = createContext<{
   saveChatId?: (chatId: number) => void
 }>({
   personaPanelType: 'chat',
-  DefaultPersonas: [],
   chatList: [],
   personas: []
 })

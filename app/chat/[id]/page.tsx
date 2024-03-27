@@ -1,23 +1,58 @@
-'use client'
-import {Suspense} from 'react'
+"use client"
+
+import {Suspense, useEffect} from 'react'
 import {Flex} from '@radix-ui/themes'
-import {useWeb3Modal, useWeb3ModalAccount} from '@web3modal/ethers/react'
-import {Chat, ChatContext, ChatSideBar, useChatHook} from '@/components'
+import {useWeb3Modal, useWeb3ModalAccount, useWeb3ModalProvider} from '@web3modal/ethers/react'
+import { BrowserProvider, Contract } from 'ethers';
+import {  redirect, useParams } from 'next/navigation';
+import router from 'next/router';
+import toast from 'react-hot-toast';
+import {Chat, ChatContext, ChatSideBar, Persona, ChatRole, useChatHook} from '@/components'
 import Addresses from "@/components/addresses";
 import {BuildWithGaladriel} from "@/components/buildwithgaladriel";
 import Navbar from "@/components/navbar";
+import { ABI } from '@/types/network';
 
-const ChatProvider = () => {
-  const provider = useChatHook()
-  const {open} = useWeb3Modal()
+const ChatProvider = async () => {
+ 
+  const {open} = useWeb3Modal();
+  const provider = useChatHook();
+  const params = useParams<{ id: string }>();
+  const nftId : string = params.id;
 
-  const {isConnected} = useWeb3ModalAccount()
+
+  const {isConnected} = useWeb3ModalAccount();
+  const {walletProvider} = useWeb3ModalProvider();
+
+  if (!walletProvider) {
+    toast.error("Not connected")
+    return
+  }
+
+  const ethersProvider = new BrowserProvider(walletProvider);
+  const signer = await ethersProvider.getSigner()
+  const contract = new Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "", ABI, signer);
+
+  const nftData = await contract.tokenDataMap(nftId);
+  console.log(nftData);
+  if (nftData[2] == false) {
+    //toast.error("Dino does not exist!");
+    redirect('/');
+  }
+  const dino: Persona = {
+    id: nftData[3],
+    role: 'system', // Use the imported ChatRole enum
+    name: nftData[3],  
+    prompt: nftData[4],
+    isDefault: true
+  };
+
   return (
     <ChatContext.Provider value={provider}>
       {isConnected ?
         <Flex style={{height: 'calc(100% - 56px)', backgroundColor: "var(--background-color)"}} className="relative">
           <>
-            <ChatSideBar/>
+            <ChatSideBar persona={dino}/>
             <div className="flex-1 relative">
               <Chat ref={provider.chatRef}/>
             </div>
@@ -53,10 +88,6 @@ const ChatProvider = () => {
                     (Galadriel testnet)
                   </a>
                 </div>
-              </div>
-              <div className="text-4xl pt-12">
-                To play, visit our <a href="https://discord.gg/4UuffUbkjb" target="_blank"
-                                      className="px-2 underline">Discord</a> to get testnet funds
               </div>
             </div>
             <div

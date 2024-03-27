@@ -31,40 +31,12 @@ export const Header = () => {
       <Flex align="center" gap="3">
         <NextLink href="/">
           <Heading as="h2" size="9" style={{maxWidth: 1200, fontFamily: "PPNeueBit-Bold"}}>
-            Galadriel
+            DinoAI
           </Heading>
         </NextLink>
-        <div
-          style={{fontFamily: "PPNeueBit-Bold"}}
-          className="text-3xl hidden lg:inline"
-        >
-          on-chain ChatGPT (contract:
-          <a
-            href={`https://explorer.galadriel.com/address/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`}
-            target="_blank"
-            className={"pl-2 underline"}
-          >
-            {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}
-          </a>
-          )
-        </div>
         <Flex align="center" gap="3" className="ml-auto">
           <Link href="https://discord.gg/4UuffUbkjb" target="_blank"
-                className="px-3 py-2 rounded-md font-medium hover:underline hidden lg:inline">discord / faucet</Link>
-          <Link href="https://galadriel.com" target='_blank'
-                className="px-3 py-2 rounded-md font-medium hover:underline hidden lg:inline">about</Link>
-          <Link href="https://twitter.com/Galadriel_AI" target='_blank'
-                className="px-3 py-2 rounded-md font-medium hover:underline hidden lg:inline">x</Link>
-          <Avatar
-            color="gray"
-            size="2"
-            radius="full"
-            fallback={
-              <a href="https://github.com/galadriel-ai/example-chatgpt" target={"_blank"}>
-                <FaGithub/>
-              </a>
-            }
-          />
+                className="px-3 py-2 rounded-md font-medium hover:underline hidden lg:inline">Galadriel discord / faucet</Link>
         </Flex>
         <Tooltip content="Navigation">
           <IconButton
