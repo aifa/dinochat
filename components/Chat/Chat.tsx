@@ -1,24 +1,23 @@
 'use client'
 
-import {forwardRef, useCallback, useContext, useEffect, useImperativeHandle, useRef, useState} from 'react'
-import {Flex, Heading, IconButton, ScrollArea, Tooltip} from '@radix-ui/themes'
-import {useWeb3ModalProvider} from '@web3modal/ethers/react';
-import {BrowserProvider, Contract, ethers, TransactionReceipt} from "ethers";
-import { useParams } from 'next/navigation';
-import ContentEditable from 'react-contenteditable'
-import toast from 'react-hot-toast'
-import {AiOutlineClear, AiOutlineLoading3Quarters, AiOutlineUnorderedList} from 'react-icons/ai'
-import {FiSend} from 'react-icons/fi'
+import { forwardRef, useCallback, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { Flex, Heading, IconButton, ScrollArea, Tooltip } from '@radix-ui/themes';
+import { useWeb3ModalProvider } from '@web3modal/ethers/react';
+import { BrowserProvider, Contract, ethers, TransactionReceipt } from "ethers";
+import ContentEditable from 'react-contenteditable';
+import toast from 'react-hot-toast';
+import { AiOutlineClear, AiOutlineLoading3Quarters, AiOutlineUnorderedList } from 'react-icons/ai';
+import { FiSend } from 'react-icons/fi';
 import ProgressBar from "@/components/ProgressBar";
-import {ABI} from "@/types/network";
+import { ABI } from "@/types/network";
 import ChatContext from './chatContext'
-import {ChatMessage} from './interface'
-import Message from './Message'
+import { ChatMessage } from './interface';
+import Message from './Message';
 
 import './index.scss'
 
 const HTML_REGULAR =
-  /<(?!img|table|\/table|thead|\/thead|tbody|\/tbody|tr|\/tr|td|\/td|th|\/th|br|\/br).*?>/gi
+  /<(?!img|table|\/table|thead|\/thead|tbody|\/tbody|tr|\/tr|td|\/td|th|\/th|br|\/br).*?>/;
 
 export interface ChatProps {
 }
@@ -30,7 +29,7 @@ export interface ChatGPInstance {
 }
 
 
-const Chat = ( props: ChatProps, ref: any) => {
+const Chat = (props: ChatProps, ref: any) => {
   const {
     debug,
     currentChatRef,
@@ -40,7 +39,7 @@ const Chat = ( props: ChatProps, ref: any) => {
     saveChatId,
   } = useContext(ChatContext)
 
-  const {walletProvider} = useWeb3ModalProvider()
+  const { walletProvider } = useWeb3ModalProvider()
 
   const [isLoading, setIsLoading] = useState(false)
   const [isTxLoading, setIsTxLoading] = useState(false)
@@ -57,8 +56,8 @@ const Chat = ( props: ChatProps, ref: any) => {
 
   const bottomOfChatRef = useRef<HTMLDivElement>(null)
 
-  const params = useParams<{ id: string }>()
-  const nftId : string = params.id;
+  const prompt: string | undefined = currentChatRef?.current?.persona?.prompt;
+  console.log('prompt', prompt);
   const sendMessage = useCallback(
     async (e: any) => {
       if (!isLoading) {
@@ -75,7 +74,7 @@ const Chat = ( props: ChatProps, ref: any) => {
         }
 
         const message = [...conversation.current]
-        conversation.current = [...conversation.current, {content: input, role: 'user'}]
+        conversation.current = [...conversation.current, { content: input, role: 'user' }]
         setMessage('')
         setIsLoading(true)
         setIsTxLoading(true)
@@ -85,10 +84,10 @@ const Chat = ( props: ChatProps, ref: any) => {
           const contract = new Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "", ABI, signer)
           let receipt
           let chatId
-          
+
           if (conversation.current.length === 1) {
             // Start chat
-            const tx = await contract.startChat(input, nftId)
+            const tx = await contract.startChat(input, prompt)
             receipt = await tx.wait()
             chatId = getChatId(receipt, contract)
             if (chatId) {
@@ -122,14 +121,14 @@ const Chat = ( props: ChatProps, ref: any) => {
                     if (lastMessage.role == "assistant") {
                       conversation.current = [
                         ...conversation.current,
-                        {content: lastMessage.content, role: "assistant"}
+                        { content: lastMessage.content, role: "assistant" }
                       ]
                       break
                     } else {
                       // Simple solution to show function results, not ideal
                       conversation.current = [
                         ...conversation.current,
-                        {content: lastMessage.content, role: "user"}
+                        { content: lastMessage.content, role: "user" }
                       ]
                     }
                   }
@@ -212,7 +211,7 @@ const Chat = ( props: ChatProps, ref: any) => {
 
   useEffect(() => {
     if (bottomOfChatRef.current) {
-      bottomOfChatRef.current.scrollIntoView({behavior: 'smooth'})
+      bottomOfChatRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [conversation, currentMessage])
 
@@ -246,30 +245,30 @@ const Chat = ( props: ChatProps, ref: any) => {
 
   return (
     <Flex direction="column" height="100%" className="relative" gap="3"
-          style={{backgroundColor: "var(--background-color)"}}
+      style={{ backgroundColor: "var(--background-color)" }}
     >
       <Flex
         justify="between"
         align="center"
         py="3"
         px="4"
-        style={{backgroundColor: "#114093"}}
+        style={{ backgroundColor: "#114093" }}
       >
-        <Heading size="4">{currentChatRef?.current?.persona?.name || 'None'} - {currentChatRef?.current?.persona?.prompt || 'None'}</Heading>
+        <Heading size="4">{currentChatRef?.current?.persona?.name || 'None'} - {currentChatRef?.current?.persona?.avatar || 'None'}</Heading>
       </Flex>
       <ScrollArea
         className="flex-1 px-4"
         type="auto"
         scrollbars="vertical"
-        style={{height: '100%'}}
+        style={{ height: '100%' }}
       >
         {conversation.current.map((item, index) => (
-          <Message key={index} message={item}/>
+          <Message key={index} message={item} />
         ))}
-        {currentMessage && <Message message={{content: currentMessage, role: 'assistant'}}/>}
+        {currentMessage && <Message message={{ content: currentMessage, role: 'assistant' }} />}
         {isLoading &&
           <div className="pt-4">
-            <ProgressBar duration={10} message="Waiting for response..."/>
+            <ProgressBar duration={10} message="Waiting for response..." />
           </div>
         }
         <div ref={bottomOfChatRef}></div>
@@ -277,7 +276,7 @@ const Chat = ( props: ChatProps, ref: any) => {
       <div className="px-4 pb-3">
         <Flex align="end" justify="between" gap="3" className="relative">
           <div className="rt-TextAreaRoot rt-r-size-1 rt-variant-surface flex-1 rounded-3xl chat-textarea"
-               style={{borderWidth: "1px"}}>
+            style={{ borderWidth: "1px" }}>
             <ContentEditable
               innerRef={textAreaRef}
               style={{
@@ -304,9 +303,9 @@ const Chat = ( props: ChatProps, ref: any) => {
                 height="6"
                 align="center"
                 justify="center"
-                style={{color: 'var(--accent-11)'}}
+                style={{ color: 'var(--accent-11)' }}
               >
-                <AiOutlineLoading3Quarters className="animate-spin size-4"/>
+                <AiOutlineLoading3Quarters className="animate-spin size-4" />
               </Flex>
             )}
             <Tooltip content={'Send Message'}>
@@ -318,7 +317,7 @@ const Chat = ( props: ChatProps, ref: any) => {
                 className="rounded-xl cursor-pointer"
                 onClick={sendMessage}
               >
-                <FiSend className="size-4"/>
+                <FiSend className="size-4" />
               </IconButton>
             </Tooltip>
             <Tooltip content={'Clear Message'}>
@@ -330,7 +329,7 @@ const Chat = ( props: ChatProps, ref: any) => {
                 disabled={isLoading}
                 onClick={clearMessages}
               >
-                <AiOutlineClear className="size-4"/>
+                <AiOutlineClear className="size-4" />
               </IconButton>
             </Tooltip>
             <Tooltip content={'Toggle Sidebar'}>
@@ -342,7 +341,7 @@ const Chat = ( props: ChatProps, ref: any) => {
                 disabled={isLoading}
                 onClick={onToggleSidebar}
               >
-                <AiOutlineUnorderedList className="size-4"/>
+                <AiOutlineUnorderedList className="size-4" />
               </IconButton>
             </Tooltip>
           </Flex>

@@ -1,6 +1,6 @@
 'use client'
 
-import {createWeb3Modal, defaultConfig} from '@web3modal/ethers/react'
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = "f25128b8bcfc64fb5c124705aa9442b8"
@@ -10,7 +10,7 @@ let mainnet = {
   name: 'Galadriel',
   currency: 'GAL',
   explorerUrl: 'https://explorer.galadriel.com',
-  rpcUrl: 'https://testnet.galadriel.com/'
+  rpcUrl: 'https://devnet.galadriel.com/'
 }
 if (process.env.NEXT_PUBLIC_NETWORK === "local") {
   mainnet = {
@@ -33,12 +33,12 @@ const metadata = {
 }
 
 createWeb3Modal({
-  ethersConfig: defaultConfig({metadata}),
+  ethersConfig: defaultConfig({ metadata }),
   chains: [mainnet],
   projectId,
   enableAnalytics: true // Optional - defaults to your Cloud configuration
 })
 
-export function Web3ModalProvider({children}: any) {
+export function Web3ModalProvider({ children }: any) {
   return children
 }

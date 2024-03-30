@@ -1,4 +1,4 @@
-export const ABI = [
+export const ABI =  [
   {
     inputs: [
       {
@@ -259,30 +259,6 @@ export const ABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "chatRuns",
-    outputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "messagesCount",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "tokenId",
         type: "uint256",
       },
@@ -339,6 +315,52 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "getTokenData",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "tokenId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "creator",
+            type: "address",
+          },
+          {
+            internalType: "bool",
+            name: "isMinted",
+            type: "bool",
+          },
+          {
+            internalType: "string",
+            name: "image_url",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "metadata_url",
+            type: "string",
+          },
+        ],
+        internalType: "struct ChatLib.TokenData",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "owner",
         type: "address",
@@ -369,27 +391,17 @@ export const ABI = [
       },
       {
         internalType: "string",
+        name: "metadata_url",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "addImage",
+        type: "bool",
+      },
+      {
+        internalType: "string",
         name: "prompt",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "model",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "temperature",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "description",
         type: "string",
       },
     ],
@@ -397,7 +409,7 @@ export const ABI = [
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "i",
         type: "uint256",
       },
     ],
@@ -605,9 +617,9 @@ export const ABI = [
         type: "string",
       },
       {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
+        internalType: "string",
+        name: "systemPrompt",
+        type: "string",
       },
     ],
     name: "startChat",
@@ -667,60 +679,6 @@ export const ABI = [
         internalType: "uint256",
         name: "",
         type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "tokenDataMap",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "isMinted",
-        type: "bool",
-      },
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "description",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "systemPrompt",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "model",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "temperature",
-        type: "string",
       },
     ],
     stateMutability: "view",

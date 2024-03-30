@@ -220,9 +220,7 @@ const useChatHook = () => {
       })
 
       onChangeChat(currentChat || chatList[0])
-    } else {
-      onCreateChat(personas[0])
-    }
+    } 
 
     return () => {
       document.body.removeAttribute('style')
