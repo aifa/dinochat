@@ -188,11 +188,6 @@ const useChatHook = () => {
     }
   }
 
-  const setPersonasList = (personas: Persona[]) => {
-    setPersonas(personas);
-
-  }
-
   const saveChatId = (chatId: number) => {
     const chatList = (JSON.parse(localStorage.getItem(StorageKeys.Chat_List) || '[]') ||
       []) as Chat[]
@@ -286,7 +281,7 @@ const useChatHook = () => {
     onToggleSidebar,
     forceUpdate,
     saveChatId,
-    setPersonasList
+    setPersonas
   }
 }
 

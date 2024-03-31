@@ -12,7 +12,7 @@ import ChatContext from './chatContext'
 
 import './index.scss'
 
-export const ChatSideBar = (persona: {persona:Persona}) => {
+export const ChatSideBar = (persona: { persona: Persona }) => {
   const {
     currentChatRef,
     chatList,

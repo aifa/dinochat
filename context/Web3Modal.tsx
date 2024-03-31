@@ -1,44 +1,35 @@
 'use client'
 
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
-
-// 1. Get projectId at https://cloud.walletconnect.com
-const projectId = "f25128b8bcfc64fb5c124705aa9442b8"
-
-let mainnet = {
-  chainId: 696969,
-  name: 'Galadriel',
-  currency: 'GAL',
-  explorerUrl: 'https://explorer.galadriel.com',
-  rpcUrl: 'https://devnet.galadriel.com/'
-}
-if (process.env.NEXT_PUBLIC_NETWORK === "local") {
-  mainnet = {
-    chainId: 1337,
-    name: 'Galadriel',
-    currency: 'GAL',
-    explorerUrl: 'https://explorer.galadriel.com',
-    rpcUrl: 'http://127.0.0.1:8545'
-  }
-}
+import React, { ReactNode } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { createWeb3Modal } from '@web3modal/wagmi/react'
+import { State, WagmiProvider } from 'wagmi'
+import { config, projectId } from '.'
 
 
-// 3. Create modal
-const metadata = {
-  name: "VitAIlik",
-  description: "On-chain RPG game",
-  // TODO:
-  url: 'https://galadriel.com', // origin must match your domain & subdomain
-  icons: []
-}
+// Setup queryClient
+const queryClient = new QueryClient()
 
+if (!projectId) throw new Error('Project ID is not defined')
+
+// Create modal
 createWeb3Modal({
-  ethersConfig: defaultConfig({ metadata }),
-  chains: [mainnet],
+  wagmiConfig: config,
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
+  enableAnalytics: true, // Optional - defaults to your Cloud configuration
+  enableOnramp: true // Optional - false as default
 })
 
-export function Web3ModalProvider({ children }: any) {
-  return children
+export default function Web3ModalProvider({
+  children,
+  initialState
+}: {
+  children: ReactNode
+  initialState?: State
+}) {
+  return (
+    <WagmiProvider config={config} initialState={initialState}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </WagmiProvider>
+  )
 }
