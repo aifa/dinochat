@@ -56,13 +56,12 @@ const Chat = (props: ChatProps, ref: any) => {
 
   const bottomOfChatRef = useRef<HTMLDivElement>(null)
 
-  const prompt: string | undefined = currentChatRef?.current?.persona?.prompt;
-  console.log('prompt', prompt);
   const sendMessage = useCallback(
     async (e: any) => {
       if (!isLoading) {
         e.preventDefault()
         const input = textAreaRef.current?.innerHTML?.replace(HTML_REGULAR, '') || ''
+        const prompt = currentChatRef?.current?.persona?.prompt;
 
         if (input.length < 1) {
           toast.error('Please type a message to continue.')

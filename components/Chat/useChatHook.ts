@@ -188,11 +188,6 @@ const useChatHook = () => {
     }
   }
 
-  const setPersonasList = (personas: Persona[]) => {
-    setPersonas(personas);
-
-  }
-
   const saveChatId = (chatId: number) => {
     const chatList = (JSON.parse(localStorage.getItem(StorageKeys.Chat_List) || '[]') ||
       []) as Chat[]
@@ -241,7 +236,7 @@ const useChatHook = () => {
   useEffect(() => {
     const loadedPersonas = JSON.parse(localStorage.getItem('Personas') || '[]') as Persona[]
     const updatedPersonas = loadedPersonas.map((persona) => {
-      if (!persona.id) {
+      if (persona && !persona.id) {
         persona.id = uuid()
       }
       return persona
@@ -254,7 +249,8 @@ const useChatHook = () => {
   }, [personas])
 
   useEffect(() => {
-    if (isInit && !openPersonaPanel && chatList.length === 0) {
+    if (isInit && !openPersonaPanel && chatList.length === 0 && personas.length > 0) {
+
       onCreateChat(personas[0])
     }
     isInit = true
@@ -286,7 +282,7 @@ const useChatHook = () => {
     onToggleSidebar,
     forceUpdate,
     saveChatId,
-    setPersonasList
+    setPersonas
   }
 }
 

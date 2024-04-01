@@ -6,7 +6,10 @@ const nextConfig = {
   sassOptions: {
     // includePaths: [path.join(__dirname, 'styles')]
   },
-  reactStrictMode: false,
+  experimental: {
+    serverComponentsExternalPackages: ["ipfs-utils"],
+  },
+  reactStrictMode: true,
   async redirects() {
     return [
       {

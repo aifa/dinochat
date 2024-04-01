@@ -6,13 +6,12 @@ import cs from 'classnames'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { BiMessageDetail } from 'react-icons/bi'
 import { FiPlus } from 'react-icons/fi'
-import { RiRobot2Line } from 'react-icons/ri'
 import { Persona } from '.'
 import ChatContext from './chatContext'
 
 import './index.scss'
 
-export const ChatSideBar = (persona: {persona:Persona}) => {
+export const ChatSideBar = (persona: { persona: Persona }) => {
   const {
     currentChatRef,
     chatList,
@@ -20,7 +19,6 @@ export const ChatSideBar = (persona: {persona:Persona}) => {
     onDeleteChat,
     onChangeChat,
     onCreateChat,
-    onOpenPersonaPanel,
   } = useContext(ChatContext)
 
   return (

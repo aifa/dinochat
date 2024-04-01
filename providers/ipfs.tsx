@@ -15,6 +15,9 @@ export const ipfsClient = create({
 
 export async function getNFTMetadataFromIPFS(ipfsHash: string) {
   for await (const file of ipfsClient.get(ipfsHash)) {
+    if (file === undefined) {
+      return undefined;
+    }
     // The file is of type unit8array so we need to convert it to string
     const content = new TextDecoder().decode(file);
     // Remove any leading/trailing whitespace
@@ -22,6 +25,9 @@ export async function getNFTMetadataFromIPFS(ipfsHash: string) {
     // Find the start and end index of the JSON object
     const startIndex = trimmedContent.indexOf("{");
     const endIndex = trimmedContent.lastIndexOf("}") + 1;
+    if (startIndex === -1 || endIndex === -1 || startIndex === undefined || endIndex === undefined) {
+      return undefined;
+    }
     // Extract the JSON object string
     const jsonObjectString = trimmedContent.slice(startIndex, endIndex);
     try {

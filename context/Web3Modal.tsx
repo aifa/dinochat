@@ -3,7 +3,7 @@
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
 
 // 1. Get projectId at https://cloud.walletconnect.com
-const projectId = "f25128b8bcfc64fb5c124705aa9442b8"
+const projectId = "d50524945c1ebfcf7865dff3fabb05f3"
 
 let mainnet = {
   chainId: 696969,
