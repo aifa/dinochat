@@ -7,10 +7,11 @@ export interface ChatMessage {
 export interface Persona {
   id?: string
   role: ChatRole
-  avatar?: string
+  avatar_url?: string
   name?: string
   prompt?: string
   key?: string
+  description?: string
   isDefault?: boolean
 }
 

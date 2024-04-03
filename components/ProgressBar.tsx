@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 const FUN_WAITING_MESSAGES = [
   "on chain ai is slow lol",
@@ -20,9 +21,10 @@ const FUN_WAITING_MESSAGES = [
 interface ProgressBarProps {
   duration: number; // Total duration of progress in seconds
   message: string;
+  avatar_url: string | undefined;
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({ duration, message }) => {
+export const ProgressBar: React.FC<ProgressBarProps> = ({ duration, message, avatar_url }) => {
   const [progress, setProgress] = useState(1);
   const [randomMessage, setRandomMessage] = useState("");
 
@@ -57,11 +59,19 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ duration, message }) =
         <span className="text-brand-neongreen">{randomMessage}</span>
       </p>
       <div className="w-full bg-white h-2.5 dark:bg-gray-700">
+        {/*avatar_url !== undefined && avatar_url !== "" && (
+          <Image
+            src={avatar_url}
+            alt="My Dino Assistant"
+            className="h-60 w-200"
+            width="300"
+            height="400"
+        />)*/}
         <div
           className="bg-[#00ff66] h-2.5"
           style={{ width: `${progress}%` }}
         ></div>
-      </div>
+      </div >
     </>
   );
 };

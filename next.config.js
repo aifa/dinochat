@@ -9,6 +9,18 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["ipfs-utils"],
   },
+  exports : {
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'storage.googleapis.com',
+          port: '',
+          pathname: 'galadriel-assets/**',
+        },
+      ],
+    },
+  },
   reactStrictMode: true,
   async redirects() {
     return [

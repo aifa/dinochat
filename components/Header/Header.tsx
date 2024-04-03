@@ -26,11 +26,11 @@ export const Header = () => {
   return (
     <header
       className={cs('block shadow-sm sticky top-0 dark:shadow-gray-500 py-3 px-4 z-20')}
-      style={{ backgroundColor: 'var(--background-color)' }}
+      style={{ backgroundColor: 'var(--accent-2)' }}
     >
       <Flex align="center" gap="3">
         <NextLink href="/">
-          <Heading as="h2" size="9" style={{ maxWidth: 1200, fontFamily: "PPNeueBit-Bold" }}>
+          <Heading as="h2" size="9">
             DinoAI
           </Heading>
         </NextLink>

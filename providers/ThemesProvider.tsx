@@ -1,13 +1,13 @@
-import React, {PropsWithChildren} from 'react'
-import {Theme} from '@radix-ui/themes'
-import {ThemeProvider} from '@/components/Themes'
+import React, { PropsWithChildren } from 'react'
+import { Theme, ThemePanel } from '@radix-ui/themes'
+import { ThemeProvider } from '@/components/Themes'
 
-export const ThemesProvider = ({children}: PropsWithChildren) => {
+export const ThemesProvider = ({ children }: PropsWithChildren) => {
   return (
-    <ThemeProvider forcedTheme={"dark"}>
-      <Theme accentColor="violet" style={{height: '100%'}} className="h-full">
+    <ThemeProvider forcedTheme={"light"}>
+      <Theme appearance="light" accentColor="jade" style={{ height: '100%' }} className="h-full">
         {children}
-        {/* <ThemePanel /> */}
+        {/** <ThemePanel />*/}
       </Theme>
     </ThemeProvider>
   )

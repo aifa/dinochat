@@ -244,16 +244,16 @@ const Chat = (props: ChatProps, ref: any) => {
 
   return (
     <Flex direction="column" height="100%" className="relative" gap="3"
-      style={{ backgroundColor: "var(--background-color)" }}
+      style={{ backgroundColor: "var(--accent-2)" }}
     >
       <Flex
         justify="between"
         align="center"
         py="3"
         px="4"
-        style={{ backgroundColor: "#114093" }}
+        style={{ backgroundColor: "var(--accent-3)" }}
       >
-        <Heading size="4">{currentChatRef?.current?.persona?.name || 'None'} - {currentChatRef?.current?.persona?.avatar || 'None'}</Heading>
+        <Heading size="4">{currentChatRef?.current?.persona?.name || 'None'} - {currentChatRef?.current?.persona?.description || 'None'}</Heading>
       </Flex>
       <ScrollArea
         className="flex-1 px-4"
@@ -267,7 +267,7 @@ const Chat = (props: ChatProps, ref: any) => {
         {currentMessage && <Message message={{ content: currentMessage, role: 'assistant' }} />}
         {isLoading &&
           <div className="pt-4">
-            <ProgressBar duration={10} message="Waiting for response..." />
+            <ProgressBar duration={10} message="Waiting for response..." avatar_url={currentChatRef?.current?.persona?.avatar_url} />
           </div>
         }
         <div ref={bottomOfChatRef}></div>

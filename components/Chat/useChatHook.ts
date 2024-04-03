@@ -130,7 +130,6 @@ const useChatHook = () => {
       onOpenPersonaPanel('chat')
     }
   }
-
   const onCreatePersona = async (values: any) => {
     const {type, name, prompt, files} = values
     const persona: Persona = {

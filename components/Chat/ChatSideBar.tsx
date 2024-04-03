@@ -22,7 +22,7 @@ export const ChatSideBar = (persona: { persona: Persona }) => {
   } = useContext(ChatContext)
 
   return (
-    <Flex direction="column" className={cs('chart-side-bar', { show: toggleSidebar })}>
+    <Flex direction="column" className={cs('chart-side-bar', { show: toggleSidebar }, { backgroundColor: "var(--accent-2)" })}>
       <Flex className="p-2 h-full overflow-hidden w-64" direction="column" gap="3">
         <Box
           width="auto"
