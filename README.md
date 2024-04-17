@@ -1,7 +1,5 @@
 # ChatGPT Lite
 
-chat forked from [chatgpt-lite](https://github.com/galadriel-ai/chatgpt-lite)
-
 This is a chat app used by DinoAI
 
 ## Development
